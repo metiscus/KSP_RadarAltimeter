@@ -18,7 +18,12 @@ namespace KSP_RALT
 
 			GUILayout.BeginHorizontal();
 			int meterAlt = (int)Math.Truncate(altitude);
-			String text = "Radar Altitude: " + meterAlt;
+			String text;
+			if (altitude > altitudeMax)
+				text = "Radar Altitude: MAX";
+			else
+				text = "Radar Altitude: " + meterAlt;
+
 			if (!this.isEnabled)
 				text = "   Disabled   ";
 
@@ -45,7 +50,7 @@ namespace KSP_RALT
 		private void drawGUI()
 		{
 			GUI.skin = HighLogic.Skin;
-			windowPos = GUILayout.Window(1, windowPos, WindowGUI, "Radar Altitude", GUILayout.MinWidth(100));	 
+			windowPos = GUILayout.Window(1, windowPos, WindowGUI, "Radar Altitude", GUILayout.MinWidth(180));	 
 		}
 
 		public override void OnStart(StartState state)
@@ -74,8 +79,6 @@ namespace KSP_RALT
 		{
 			base.OnFixedUpdate ();
 			altitude = (double)vessel.heightFromTerrain;
-			if (altitude > altitudeMax)
-				altitude = altitudeMax;
 			if (altitude < 0.0) {
 				altitude *= -1.0;
 			}
